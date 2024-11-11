@@ -1,19 +1,29 @@
 "use client";
 
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import Link from "next/link";
-import { useState } from "react";
+import { signUpSchema } from "@/lib/types";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 const signUp = {
   title: "Create Your Travel Account",
@@ -33,62 +43,141 @@ interface AuthFormProps {
   type: "signIn" | "signUp";
 }
 
+type ToastVariant = "default" | "destructive" | null | undefined;
+
 export const AuthForm = ({ type }: AuthFormProps) => {
-  const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
+  const { toast } = useToast();
+
+  const msgToast = (variant: ToastVariant, title: string) => {
+    console.log("in toast")
+    toast({
+      variant,
+      title,
+    });
+  };
+
+  const form = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      phone: "",
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
+    const response = await fetch("/api/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        phone: values.phone,
+      }),
+    });
+
+    if (response.ok) {
+      router.push("/signin");
+      msgToast("default", "Sign Up successfull, Please Sign in with your credentials")
+    } else {
+      console.log(response);
+      msgToast("destructive", "Sign Up Failed! Please try again");
+      console.error("Signup Failed");
+    }
+  };
+
   return (
-    <>
-      <Dialog
-        open={isOpen}
-        onOpenChange={() => {
-          setIsOpen(!isOpen);
-          router.push("/");
-        }}
-      >
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle className="text-center">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <Card>
+        <CardContent className="sm:max-w-[425px]">
+          <CardHeader>
+            <CardTitle className="text-center">
               {type == "signUp" ? signUp.title : signIn.title}
-            </DialogTitle>
-            <DialogDescription className="text-center">
+            </CardTitle>
+            <CardDescription className="text-center">
               {type == "signUp" ? signUp.description : signIn.description}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            {type == "signUp" && (
-              <div>
-                <Label htmlFor="name" className="text-right">
-                  Name
-                </Label>
-                <Input id="name" className="col-span-3 mt-2" />
-              </div>
-            )}
-            <div>
-              <Label htmlFor="email" className="text-right">
-                Email
-              </Label>
-              <Input id="email" type="email" className="col-span-3 mt-2" />
-            </div>
-            <div>
-              <Label htmlFor="password" className="text-right">
-                Password
-              </Label>
-              <Input
-                id="password"
-                type="password"
-                className="col-span-3 mt-2"
-              />
-            </div>
+            </CardDescription>
+          </CardHeader>
+          <div className="grid py-2">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+                <div className="space-y-3">
+                  {type == "signUp" && (
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Name</FormLabel>
+                          <FormControl>
+                            <Input placeholder="johndoe" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input placeholder="mail@example.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  {type == "signUp" && (
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Phone</FormLabel>
+                          <FormControl>
+                            <Input placeholder="0123456789" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Password</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="Enter your password"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <Button
+                  size="lg"
+                  type="submit"
+                  className="bg-teal-600 hover:bg-teal-700 w-full mt-5"
+                >
+                  {type == "signUp" ? "Sign Up" : "Sign In"}
+                </Button>
+              </form>
+            </Form>
           </div>
-          <DialogFooter>
-            <Button
-              size="lg"
-              type="submit"
-              className="bg-teal-600 hover:bg-teal-700"
-            >
-              {type == "signUp" ? "Sign Up" : "Sign In"}
-            </Button>
-          </DialogFooter>
           <div className="flex justify-center gap-2">
             <span>{type == "signUp" ? signUp.footer : signIn.footer}</span>
             <Link
@@ -98,8 +187,8 @@ export const AuthForm = ({ type }: AuthFormProps) => {
               {type == "signUp" ? "Sign In" : "Sign Up"}
             </Link>
           </div>
-        </DialogContent>
-      </Dialog>
-    </>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
