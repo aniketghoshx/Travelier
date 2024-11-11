@@ -14,25 +14,27 @@ datasource db {
 }
 
 model User{
-  id              Int          @id @default(autoincrement())
+  id              Int             @id @default(autoincrement())
   name            String
-  email           String       @unique
+  email           String          @unique
   password        String
   phone           String  
-  role            Role         @default(USER)
+  role            Role            @default(USER)
+  reviews         Review[]
   bookings        Booking[]
 }
 
 model Tour{
-  id              Int         @id @default(autoincrement())
+  id              Int             @id @default(autoincrement())
   title           String
   description     String 
   destination     String
   duration        Int
   price           Int
-  isActive        Boolean    @default(true)   
+  isActive        Boolean         @default(true)   
   images          TourImage[]
-  bookings        Booking[]   
+  bookings        Booking[] 
+  reviews         Review[]  
 }
 
 model TourImage{
@@ -69,7 +71,9 @@ model Review{
   tourId          Int
   rating          Int
   comment         String
-  createdAt       DateTime    @default(now())
+  createdAt       DateTime    @default(now()) 
+  user            User        @relation(fields: [userId], references: [id])
+  tour            Tour        @relation(fields: [tourId], references: [id])
 }
 
 enum Role{
