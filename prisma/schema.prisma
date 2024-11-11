@@ -12,3 +12,69 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User{
+  id              Int          @id @default(autoincrement())
+  name            String
+  email           String       @unique
+  password        String
+  phone           String  
+  role            Role         @default(USER)
+  bookings        Booking[]
+}
+
+model Tour{
+  id              Int         @id @default(autoincrement())
+  title           String
+  description     String 
+  destination     String
+  duration        Int
+  price           Int
+  isActive        Boolean    @default(true)   
+  images          TourImage[]
+  bookings        Booking[]   
+}
+
+model TourImage{
+  id        Int       @id @default(autoincrement())
+  tourId    Int
+  imgUrl    String
+  tour      Tour      @relation(fields: [tourId], references: [id])
+}
+
+model Booking{
+  id              Int         @id @default(autoincrement())
+  userId          Int
+  tourId          Int
+  amount          Int
+  noOfTraveler    Int
+  bookingDate     DateTime
+  createdAt       DateTime    @default(now())
+  payment         Payment?
+  traveler        User        @relation(fields: [userId], references: [id])
+  tour            Tour        @relation(fields: [tourId], references: [id])
+}
+
+model Payment{
+  id              Int         @id @default(autoincrement())
+  bookingId       Int         @unique
+  transactionId   String    
+  createdAt       DateTime    @default(now())
+  booking         Booking     @relation(fields: [bookingId], references: [id])
+}
+
+model Review{
+  id              Int         @id @default(autoincrement())
+  userId          Int         
+  tourId          Int
+  rating          Int
+  comment         String
+  createdAt       DateTime    @default(now())
+}
+
+enum Role{
+  USER
+  ADMIN
+}
+
+
