@@ -47,18 +47,17 @@ export const SignInForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
-    console.log("hello");
     const signInData = await signIn("credentials", {
       email: values.email,
       password: values.password,
     });
-    console.log(signInData)
+    
 
-    if (signInData?.error) {
+    if (!signInData) {
       msgToast("destructive", "Sign In Failed! Please try again");
     } else {
-        msgToast("default", "Sign In successfull");
-        router.push("/");
+      msgToast("default", "Sign In successfull");
+      router.push("/");
     }
   };
 

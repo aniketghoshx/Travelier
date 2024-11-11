@@ -1,11 +1,15 @@
-"use client";
-
 import { MapPin } from "lucide-react";
 import { AuthButtons } from "./AuthButtons";
 import Link from "next/link";
 import { Navbar } from "./Navbar";
+import { getServerSession } from "next-auth";
 
-export const Appbar = () => {
+import { LogoutButton } from "./LogoutButton";
+import { authOptions } from "@/lib/auth";
+
+export const Appbar = async() => {
+  const session = await getServerSession(authOptions)
+  
   return (
     <>
       <header className="bg-white shadow-sm border-b border-gray-200">
@@ -17,8 +21,12 @@ export const Appbar = () => {
                 Travelier
               </span>
             </Link>
-            <Navbar/>
-            <AuthButtons />
+            <Navbar />
+            {session?.user ? (
+              <LogoutButton/>
+            ) : (
+              <AuthButtons />
+            )}
           </div>
         </div>
       </header>
