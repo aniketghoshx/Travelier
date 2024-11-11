@@ -21,37 +21,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { signUpSchema } from "@/lib/types";
+import { signUpSchema, ToastVariant } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import {signIn} from "next-auth/react"
 
-const signUpObj = {
-  title: "Create Your Travel Account",
-  description:
-    "Join Travelier to access exclusive deals and personalized travel recommendations.",
-  footer: "Already have an account?",
-};
 
-const signInObj = {
-  title: "Welcome Back to Travelier",
-  description:
-    "Sign in to access your account and continue planning your next adventure.",
-  footer: "Don't have an account?",
-};
-
-interface AuthFormProps {
-  type: "signIn" | "signUp";
-}
-
-type ToastVariant = "default" | "destructive" | null | undefined;
-
-export const AuthForm = ({ type }: AuthFormProps) => {
+export const SignUpForm = () => {
   const router = useRouter();
   const { toast } = useToast();
 
   const msgToast = (variant: ToastVariant, title: string) => {
-    console.log("in toast")
+    console.log("in toast");
     toast({
       variant,
       title,
@@ -68,7 +48,7 @@ export const AuthForm = ({ type }: AuthFormProps) => {
     },
   });
 
-  const onSignUp = async (values: z.infer<typeof signUpSchema>) => {
+  const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
     const response = await fetch("/api/signup", {
       method: "POST",
       headers: {
@@ -83,7 +63,10 @@ export const AuthForm = ({ type }: AuthFormProps) => {
     });
     if (response.ok) {
       router.push("/signin");
-      msgToast("default", "Sign Up successfull, Please Sign in with your credentials")
+      msgToast(
+        "default",
+        "Sign Up successfull, Please Sign in with your credentials"
+      );
     } else {
       console.log(response);
       msgToast("destructive", "Sign Up Failed! Please try again");
@@ -91,56 +74,36 @@ export const AuthForm = ({ type }: AuthFormProps) => {
     }
   };
 
-  const onSignIn = async (values: any) => {
-    console.log("hello")
-    const signInData = await signIn('credentials', {
-      email: values.email,
-      password: values.password
-    })
-    
-    if (signInData?.error) {
-      msgToast("destructive", "Sign In Failed! Please try again");
-    } else {
-      router.push("/");
-      msgToast(
-        "default",
-        "Sign In successfull"
-      );
-    }
-   };
-
-
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <Card>
         <CardContent className="sm:max-w-[425px]">
           <CardHeader>
             <CardTitle className="text-center">
-              {type == "signUp" ? signUpObj.title : signInObj.title}
+              Create Your Travel Account
             </CardTitle>
             <CardDescription className="text-center">
-              {type == "signUp" ? signUpObj.description : signInObj.description}
+              Join Travelier to access exclusive deals and personalized travel
+              recommendations.
             </CardDescription>
           </CardHeader>
           <div className="grid py-2">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(type == "signUp" ? onSignUp : onSignIn)} className="w-full">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
                 <div className="space-y-3">
-                  {type == "signUp" && (
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Name</FormLabel>
-                          <FormControl>
-                            <Input placeholder="johndoe" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="johndoe" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <FormField
                     control={form.control}
                     name="email"
@@ -154,21 +117,19 @@ export const AuthForm = ({ type }: AuthFormProps) => {
                       </FormItem>
                     )}
                   />
-                  {type == "signUp" && (
-                    <FormField
-                      control={form.control}
-                      name="phone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Phone</FormLabel>
-                          <FormControl>
-                            <Input placeholder="0123456789" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Phone</FormLabel>
+                        <FormControl>
+                          <Input placeholder="0123456789" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <FormField
                     control={form.control}
                     name="password"
@@ -192,18 +153,15 @@ export const AuthForm = ({ type }: AuthFormProps) => {
                   type="submit"
                   className="bg-teal-600 hover:bg-teal-700 w-full mt-5"
                 >
-                  {type == "signUp" ? "Sign Up" : "Sign In"}
+                  Sign Up
                 </Button>
               </form>
             </Form>
           </div>
           <div className="flex justify-center gap-2">
-            <span>{type == "signUp" ? signUpObj.footer : signInObj.footer}</span>
-            <Link
-              href={type == "signUp" ? "/signin" : "/signup"}
-              className="text-teal-600"
-            >
-              {type == "signUp" ? "Sign In" : "Sign Up"}
+            <span>Already have an account?</span>
+            <Link href={"/signin"} className="text-teal-600">
+              Sign In
             </Link>
           </div>
         </CardContent>
