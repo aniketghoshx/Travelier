@@ -50,6 +50,7 @@ model Booking{
   tourId          Int
   amount          Int
   noOfTraveler    Int
+  status          BookingStatus
   bookingDate     DateTime
   createdAt       DateTime    @default(now())
   payment         Payment?
@@ -81,4 +82,7 @@ enum Role{
   ADMIN
 }
 
-
+enum BookingStatus{
+  Upcoming
+  Completed
+}
