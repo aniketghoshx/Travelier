@@ -55,6 +55,7 @@ export const SignInForm = () => {
 
     if (!res?.error) {
       router.push("/");
+      router.refresh();
       msgToast("default", "Sign In successfull");
     } else {
       msgToast("destructive", "Sign In Failed! Please try again");
