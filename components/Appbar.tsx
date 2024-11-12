@@ -4,8 +4,8 @@ import { MapPin } from "lucide-react";
 import { AuthButtons } from "./AuthButtons";
 import Link from "next/link";
 import { Navbar } from "./Navbar";
-import { LogoutButton } from "./LogoutButton";
 import { useSession } from "next-auth/react";
+import { DropDownAvatar } from "./DropDownAvatar";
 
 export const Appbar = () => {
   const session = useSession()
@@ -24,7 +24,7 @@ export const Appbar = () => {
             </Link>
             <Navbar />
             {session.data?.user ? (
-              <LogoutButton/>
+              <DropDownAvatar/>
             ) : (
               <AuthButtons />
             )}
