@@ -8,6 +8,11 @@ export const NewsLetter = () => {
 
   const [email, setEmail] = useState("")
 
+  const handleClick = () => {
+    console.log(email);
+    setEmail("")
+  }
+
   return (
     <>
       <section className="py-20 bg-teal-600">
@@ -25,7 +30,7 @@ export const NewsLetter = () => {
                 onChange={(e) =>{setEmail(e.target.value)}}
                 className="flex-grow rounded-l-md border-0 font-medium"
               />
-              <Button className="rounded-r-md bg-orange-400 text-white hover:bg-gray-100">
+              <Button className="rounded-r-md bg-orange-400 text-white hover:bg-gray-100" onClick={handleClick}>
                 Subscribe
               </Button>
             </div>

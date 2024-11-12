@@ -69,7 +69,7 @@ export const Footer = () => {
                   <Phone className="mr-2 h-4 w-4" /> +1 (555) 123-4567
                 </li>
                 <li className="flex items-center">
-                  <MapPin className="mr-2 h-7 w-7" /> 123 Traveler's Way,
+                  <MapPin className="mr-2 h-7 w-7" /> 123 Traveler&apos;s Way,
                   Journey City
                 </li>
               </ul>

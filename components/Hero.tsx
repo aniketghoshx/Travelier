@@ -14,7 +14,7 @@ export const Hero = () => {
               Discover Your Next Adventure
             </h1>
             <p className="text-xl md:text-2xl mb-8">
-              Explore the world's most beautiful destinations with TravelEase
+              Explore the world&apos;s most beautiful destinations with TravelEase
             </p>
             <div className="max-w-md mx-auto">
               <div className="relative">

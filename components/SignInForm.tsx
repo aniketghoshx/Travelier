@@ -21,7 +21,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { signInSchema, signUpSchema, ToastVariant } from "@/lib/types";
+import { signInSchema, ToastVariant } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { signIn } from "next-auth/react";

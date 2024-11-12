@@ -35,14 +35,14 @@ export default function Profile() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" defaultValue={data?.user.name!} disabled />
+              <Input id="name" defaultValue={data.user.name!} disabled />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
-                defaultValue={data?.user.email!}
+                defaultValue={data.user.email!}
                 disabled
               />
             </div>

@@ -9,24 +9,25 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Image from "next/image";
 
 const destinations = [
   {
     name: "Serene Bali Retreat",
-    image: "/placeholder.svg?height=400&width=600&text=Bali+Retreat",
+    image: "/maldives.jpeg",
     description:
       "Experience tranquility in the heart of Bali's lush landscapes.",
     price: 1299,
   },
   {
     name: "Alpine Adventure",
-    image: "/placeholder.svg?height=400&width=600&text=Alpine+Adventure",
+    image: "/maldives.jpeg",
     description: "Discover the majestic beauty of the Swiss Alps.",
     price: 1899,
   },
   {
     name: "Maldives Paradise",
-    image: "/placeholder.svg?height=400&width=600&text=Maldives+Paradise",
+    image: "/maldives.jpeg",
     description:
       "Indulge in luxury amidst crystal-clear waters and white sand beaches.",
     price: 2199,
@@ -44,10 +45,11 @@ export const Featured = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {destinations.map((destination, index) => (
               <Card key={index} className="overflow-hidden shadow-lg">
-                <img
+                <Image
                   src={destination.image}
                   alt={destination.name}
-                  className="w-full h-48 object-cover"
+                  width={500}
+                  height={500}
                 />
                 <CardHeader>
                   <CardTitle className="text-xl font-semibold text-gray-900">

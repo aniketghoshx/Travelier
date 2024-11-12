@@ -112,7 +112,7 @@ export default function CreateTour() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="included">What's Included</Label>
+                  <Label htmlFor="included">What&apos;s Included</Label>
                   <Textarea
                     id="included"
                     name="included"

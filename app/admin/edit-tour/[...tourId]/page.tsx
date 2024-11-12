@@ -6,12 +6,12 @@ import { redirect } from "next/navigation";
 export default async function EditTourPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ slug: string }>;
 }) {
   const session = await getServerSession(authOptions);
   if (!session?.user || session.user.role !== "ADMIN") {
     redirect("/");
   }
-
-  return <EditTour id={params.id} />;
+  const slug = (await params).slug;
+  return <EditTour id={slug} />;
 }

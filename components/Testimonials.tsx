@@ -45,7 +45,7 @@ export const Testimonials = () => {
                   <CardDescription>{testimonial.location}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="italic text-gray-700">"{testimonial.quote}"</p>
+                  <p className="italic text-gray-700">{testimonial.quote}</p>
                 </CardContent>
               </Card>
             ))}

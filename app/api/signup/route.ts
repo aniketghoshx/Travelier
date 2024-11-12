@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await db.user.create({
+    await db.user.create({
       data: {
         name,
         email,
@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (e) {
+    console.log(e);
     return NextResponse.json(
       {
         message: "Signup Failed",

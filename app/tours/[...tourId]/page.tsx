@@ -6,20 +6,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Calendar,
-  Users,
-  Clock,
-  DollarSign
-} from "lucide-react";
+import { Calendar, Users, Clock, DollarSign } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
-export default function TourDetails({ params }: { params: { id: string } }) {
+export default async function TourDetails({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const id = (await params).slug;
   const tour = {
-    id: params.id,
+    id: id,
     name: "Serene Bali Retreat",
-    image: "/placeholder.svg?height=600&width=1200&text=Bali+Retreat",
+    image: "/maldives.jpeg",
     description:
       "Experience tranquility in the heart of Bali's lush landscapes. This retreat offers a perfect blend of relaxation, culture, and adventure.",
     price: 1299,
@@ -48,10 +49,11 @@ export default function TourDetails({ params }: { params: { id: string } }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
-              <img
+              <Image
                 src={tour.image}
                 alt={tour.name}
-                className="w-full h-96 object-cover rounded-lg shadow-lg mb-8"
+                width={500}
+                height={500}
               />
               <h1 className="text-4xl font-bold text-gray-900 mb-4">
                 {tour.name}
@@ -61,7 +63,9 @@ export default function TourDetails({ params }: { params: { id: string } }) {
               <Tabs defaultValue="itinerary">
                 <TabsList>
                   <TabsTrigger value="itinerary">Itinerary</TabsTrigger>
-                  <TabsTrigger value="included">What's Included</TabsTrigger>
+                  <TabsTrigger value="included">
+                    What&apos;s Included
+                  </TabsTrigger>
                 </TabsList>
                 <TabsContent value="itinerary">
                   <Card>
@@ -88,7 +92,7 @@ export default function TourDetails({ params }: { params: { id: string } }) {
                 <TabsContent value="included">
                   <Card>
                     <CardHeader>
-                      <CardTitle>What's Included</CardTitle>
+                      <CardTitle>What&apos;s Included</CardTitle>
                       <CardDescription>
                         Everything you get with this tour package
                       </CardDescription>
