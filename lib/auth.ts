@@ -38,6 +38,7 @@ export const authOptions: NextAuthOptions = {
           id: `${existingUser.id}`,
           name: existingUser.name,
           email: existingUser.email,
+          role: existingUser.role,
         };
       },
     }),
@@ -49,19 +50,21 @@ export const authOptions: NextAuthOptions = {
         return {
           ...token,
           id: user.id,
+          role: user.role,
         };
       }
       return token;
-      },
-      async session({session, token}) {
-          return {
-              ...session,
-              user: {
-                  ...session.user,
-                  id: token.id
-              }
-          }
-      }
+    },
+    async session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          role: token.role,
+        },
+      };
+    },
   },
   pages: {
     signIn: "/signin",
