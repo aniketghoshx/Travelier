@@ -46,15 +46,15 @@ export default function CreateTour() {
 
   return (
     <main className="flex-grow">
-      <Link href="/admin/dashboard">
-        <Button variant="ghost" className="mt-4">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Dashboard
-        </Button>
-      </Link>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900">Create Tour</h1>
+        <div className="mb-6 flex justify-between items-center">
+          <div className="text-3xl font-bold text-gray-900">Create Tour</div>
+          <Link href="/admin/dashboard">
+            <Button variant="ghost" className="mt-4">
+              <ArrowLeft className=" h-4 w-4" />
+              Back to Dashboard
+            </Button>
+          </Link>
         </div>
 
         <Card>
