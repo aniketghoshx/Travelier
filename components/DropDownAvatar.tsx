@@ -35,7 +35,7 @@ export const DropDownAvatar = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuLabel className="font-normal">
-              <div className="flex flex-col space-y-1">
+              <div className="flex flex-col space-y-2">
                 <p className="text-sm font-medium leading-none">
                   {data?.user.name}
                 </p>
@@ -48,7 +48,7 @@ export const DropDownAvatar = () => {
             <DropdownMenuItem>
               <button
                 onClick={() => {
-                  router.push("user/booking-history");
+                  router.push("/user/booking-history");
                 }}
               >
                 Booking History
@@ -57,7 +57,7 @@ export const DropDownAvatar = () => {
             <DropdownMenuItem>
               <button
                 onClick={() => {
-                  router.push("user/profile");
+                  router.push("/user/profile");
                 }}
               >
                 Profile

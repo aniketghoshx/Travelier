@@ -11,9 +11,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Calendar, Users, Clock } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 
 export default function History() {
+  const session = useSession();
+  if (!session.data?.user) {
+    redirect("/");
+  }
+
   const [bookings, setBookings] = useState([
     {
       id: 1,

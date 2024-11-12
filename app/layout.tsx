@@ -24,7 +24,6 @@ export default function RootLayout({
         <Providers>
           <Appbar />
           {children}
-          <Footer />
           <Toaster />
         </Providers>
       </body>
