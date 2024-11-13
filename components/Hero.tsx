@@ -3,9 +3,18 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export const Hero = () => {
+  const router = useRouter();
+  const [searchDest, setSearchDest] = useState("");
+
+  const handleClick = () => {
+    router.push(`/tours/${searchDest}`);
+    setSearchDest("");
+  };
+
   return (
     <>
       <section className="bg-gradient-to-br from-teal-600 via-teal-500 to-teal-400 text-white py-20 md:py-32">
@@ -23,15 +32,21 @@ export const Hero = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <Input
                   type="text"
+                  value={searchDest}
                   placeholder="Where do you want to go?"
                   className="pl-10 py-6 rounded-full text-black"
+                  onChange={(e) => {
+                    setSearchDest(e.target.value);
+                  }}
                 />
               </div>
-              <Link href={"/tours"}>
-                <Button className="mt-4 bg-yellow-400 text-blue-900 hover:bg-yellow-400 px-8 py-6 rounded-full text-lg font-semibold transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1">
-                  Search Destinations
-                </Button>
-              </Link>
+
+              <Button
+                onClick={handleClick}
+                className="mt-4 bg-yellow-400 text-blue-900 hover:bg-yellow-400 px-8 py-6 rounded-full text-lg font-semibold transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1"
+              >
+                Search Destinations
+              </Button>
             </div>
           </div>
         </div>

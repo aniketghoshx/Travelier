@@ -7,56 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { TourType } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Tours() {
-  const tours = [
-    {
-      id: 1,
-      name: "Serene Bali Retreat",
-      image: "/maldives.jpeg",
-      description:
-        "Experience tranquility in the heart of Bali's lush landscapes.",
-      price: 1299,
-      duration: "7 days",
-    },
-    {
-      id: 2,
-      name: "Alpine Adventure",
-      image: "/maldives.jpeg",
-      description: "Discover the majestic beauty of the Swiss Alps.",
-      price: 1899,
-      duration: "10 days",
-    },
-    {
-      id: 3,
-      name: "Maldives Paradise",
-      image: "/maldives.jpeg",
-      description:
-        "Indulge in luxury amidst crystal-clear waters and white sand beaches.",
-      price: 2199,
-      duration: "8 days",
-    },
-    {
-      id: 4,
-      name: "Tokyo Tech Tour",
-      image: "/maldives.jpeg",
-      description: "Explore the futuristic wonders of Tokyo's technology hubs.",
-      price: 1799,
-      duration: "6 days",
-    },
-    {
-      id: 5,
-      name: "Sahara Desert Expedition",
-      image: "/maldives.jpeg",
-      description:
-        "Embark on a thrilling journey through the golden dunes of the Sahara.",
-      price: 2499,
-      duration: "12 days",
-    },
-  ];
-
+export const AllTours = ({tours}: {tours: TourType[]}) => {
   return (
     <>
       <section className="py-12">
@@ -68,14 +23,14 @@ export default function Tours() {
             {tours.map((tour) => (
               <Card key={tour.id} className="overflow-hidden">
                 <Image
-                  src={tour.image}
-                  alt={tour.name}
+                  src={"/maldives.jpeg"}
+                  alt={tour.title}
                   width={500}
                   height={500}
                 />
                 <CardHeader>
                   <CardTitle className="text-xl font-semibold text-gray-900">
-                    {tour.name}
+                    {tour.title}
                   </CardTitle>
                   <CardDescription>{tour.description}</CardDescription>
                 </CardHeader>
@@ -90,7 +45,7 @@ export default function Tours() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Link href={`/tours/${tour.id}`} className="w-full">
+                  <Link href={`/tour/${tour.id}`} className="w-full">
                     <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white">
                       View Details
                     </Button>
@@ -103,4 +58,4 @@ export default function Tours() {
       </section>
     </>
   );
-}
+};
