@@ -52,10 +52,10 @@ export default async function TourDetails({
               <Image
                 src={tour.image}
                 alt={tour.name}
-                width={500}
-                height={500}
+                width={750}
+                height={200}
               />
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              <h1 className="text-4xl font-bold text-gray-900 my-4">
                 {tour.name}
               </h1>
               <p className="text-lg text-gray-700 mb-8">{tour.description}</p>

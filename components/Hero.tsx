@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import Link from "next/link";
 
 export const Hero = () => {
   return (
@@ -14,7 +15,8 @@ export const Hero = () => {
               Discover Your Next Adventure
             </h1>
             <p className="text-xl md:text-2xl mb-8">
-              Explore the world&apos;s most beautiful destinations with TravelEase
+              Explore the world&apos;s most beautiful destinations with
+              TravelEase
             </p>
             <div className="max-w-md mx-auto">
               <div className="relative">
@@ -25,9 +27,11 @@ export const Hero = () => {
                   className="pl-10 py-6 rounded-full text-black"
                 />
               </div>
-              <Button className="mt-4 bg-yellow-400 text-blue-900 hover:bg-yellow-400 px-8 py-6 rounded-full text-lg font-semibold transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1">
-                Search Destinations
-              </Button>
+              <Link href={"/tours"}>
+                <Button className="mt-4 bg-yellow-400 text-blue-900 hover:bg-yellow-400 px-8 py-6 rounded-full text-lg font-semibold transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1">
+                  Search Destinations
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
