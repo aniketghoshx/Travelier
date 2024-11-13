@@ -16,6 +16,9 @@ import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import createTour from "@/lib/actions/createTour";
+import { useToast } from "@/hooks/use-toast";
+import { ToastVariant } from "@/lib/types";
 
 export default function CreateTour() {
   const session = useSession();
@@ -24,13 +27,22 @@ export default function CreateTour() {
     router.push("/");
   }
 
+  const { toast } = useToast();
+
+  const msgToast = (variant: ToastVariant, title: string) => {
+    console.log("in toast");
+    toast({
+      variant,
+      title,
+    });
+  };
+
   const [tour, setTour] = useState({
-    name: "",
+    title: "",
     description: "",
+    destination: "",
     duration: "",
     price: "",
-    included: "",
-    itinerary: "",
   });
 
   const handleInputChange = (
@@ -40,9 +52,15 @@ export default function CreateTour() {
     setTour((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("New tour:", tour);
+    const res = await createTour(tour);
+    if (res) {
+      msgToast("default", "New tour created");
+    } else {
+      msgToast("destructive", "Failed to create tour, Please try again");
+    }
+    router.push("/admin/dashboard");
   };
 
   return (
@@ -69,11 +87,21 @@ export default function CreateTour() {
             <form onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Tour Name</Label>
+                  <Label htmlFor="name">Destination</Label>
                   <Input
-                    id="name"
-                    name="name"
-                    value={tour.name}
+                    id="destination"
+                    name="destination"
+                    value={tour.destination}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="name">Title</Label>
+                  <Input
+                    id="title"
+                    name="title"
+                    value={tour.title}
                     onChange={handleInputChange}
                     required
                   />
@@ -94,6 +122,7 @@ export default function CreateTour() {
                     <Input
                       id="duration"
                       name="duration"
+                      type="number"
                       value={tour.duration}
                       onChange={handleInputChange}
                       required
@@ -110,26 +139,6 @@ export default function CreateTour() {
                       required
                     />
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="included">What&apos;s Included</Label>
-                  <Textarea
-                    id="included"
-                    name="included"
-                    value={tour.included}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="itinerary">Itinerary</Label>
-                  <Textarea
-                    id="itinerary"
-                    name="itinerary"
-                    value={tour.itinerary}
-                    onChange={handleInputChange}
-                    required
-                  />
                 </div>
               </div>
               <div className="mt-6">

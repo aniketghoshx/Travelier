@@ -16,50 +16,51 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { TourType } from "@/types/types";
+import updateTour from "@/lib/actions/updateTour";
+import { useToast } from "@/hooks/use-toast";
+import { ToastVariant } from "@/lib/types";
 
-export default function EditTour({id}: {id: string}) {
+export default function EditTour({ tour }: { tour: TourType }) {
   const session = useSession();
   const router = useRouter();
   if (!session.data || session.data.user.role !== "ADMIN") {
     router.push("/");
   }
+  const { toast } = useToast();
 
-  const [tour, setTour] = useState({
-    id: "",
-    name: "",
-    description: "",
-    duration: "",
-    price: "",
-    included: "",
-    itinerary: "",
+  const msgToast = (variant: ToastVariant, title: string) => {
+    console.log("in toast");
+    toast({
+      variant,
+      title,
+    });
+  };
+  const [editedTour, setEditedTour] = useState({
+    id: `${tour.id}`,
+    title: tour.title,
+    description: tour.description,
+    destination: tour.destination,
+    duration: `${tour.duration}`,
+    price: `${tour.price}`,
   });
-
-  useEffect(() => {
-    const mockTour = {
-      id: id,
-      name: "Serene Bali Retreat",
-      description:
-        "Experience tranquility in the heart of Bali's lush landscapes.",
-      duration: "7 days",
-      price: "1299",
-      included:
-        "Luxury accommodation, Daily breakfast, Guided tours, Yoga sessions, Airport transfers",
-      itinerary:
-        "Day 1: Arrival, Day 2: Ubud tour, Day 3: Mount Batur trek, Day 4: Spa day, Day 5: Beach day, Day 6: Cultural show, Day 7: Departure",
-    };
-    setTour(mockTour);
-  }, [id]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setTour((prev) => ({ ...prev, [name]: value }));
+    setEditedTour((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Updated tour:", tour);
+    const res = await updateTour(editedTour);
+    if (res) {
+      msgToast("default", "Tour is edited");
+    } else {
+      msgToast("destructive", "Failed to edit tour, Please try again");
+    }
+    router.push("/admin/dashboard");
   };
 
   return (
@@ -87,11 +88,21 @@ export default function EditTour({id}: {id: string}) {
               <form onSubmit={handleSubmit}>
                 <div className="space-y-4">
                   <div className="space-y-2">
+                    <Label htmlFor="name">Destination</Label>
+                    <Input
+                      id="destination"
+                      name="destination"
+                      value={editedTour.destination}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
                     <Label htmlFor="name">Tour Name</Label>
                     <Input
-                      id="name"
-                      name="name"
-                      value={tour.name}
+                      id="title"
+                      name="title"
+                      value={editedTour.title}
                       onChange={handleInputChange}
                       required
                     />
@@ -101,7 +112,7 @@ export default function EditTour({id}: {id: string}) {
                     <Textarea
                       id="description"
                       name="description"
-                      value={tour.description}
+                      value={editedTour.description}
                       onChange={handleInputChange}
                       required
                     />
@@ -112,7 +123,7 @@ export default function EditTour({id}: {id: string}) {
                       <Input
                         id="duration"
                         name="duration"
-                        value={tour.duration}
+                        value={editedTour.duration}
                         onChange={handleInputChange}
                         required
                       />
@@ -123,31 +134,11 @@ export default function EditTour({id}: {id: string}) {
                         id="price"
                         name="price"
                         type="number"
-                        value={tour.price}
+                        value={editedTour.price}
                         onChange={handleInputChange}
                         required
                       />
                     </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="included">What&apos;s Included</Label>
-                    <Textarea
-                      id="included"
-                      name="included"
-                      value={tour.included}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="itinerary">Itinerary</Label>
-                    <Textarea
-                      id="itinerary"
-                      name="itinerary"
-                      value={tour.itinerary}
-                      onChange={handleInputChange}
-                      required
-                    />
                   </div>
                 </div>
                 <div className="mt-6">
