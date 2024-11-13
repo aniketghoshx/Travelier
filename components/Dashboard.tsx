@@ -19,25 +19,30 @@ import {
 } from "@/components/ui/card";
 import { Edit, Trash2, Plus } from "lucide-react";
 import Link from "next/link";
+import { TourType } from "@/types/types";
+import { ToastVariant } from "@/lib/types";
+import { useToast } from "@/hooks/use-toast";
+import deleteTour from "@/lib/actions/deleteTour";
+import { useRouter } from "next/navigation";
 
-export default function Dashboard() {
- 
+export default function Dashboard({ allTours }: { allTours: TourType[] }) {
+  const router = useRouter();
+  const [tours, setTours] = useState(allTours);
+  const { toast } = useToast();
 
-  const [tours, setTours] = useState([
-    { id: 1, name: "Serene Bali Retreat", duration: "7 days", price: 1299 },
-    { id: 2, name: "Alpine Adventure", duration: "10 days", price: 1899 },
-    { id: 3, name: "Maldives Paradise", duration: "8 days", price: 2199 },
-    { id: 4, name: "Tokyo Tech Tour", duration: "6 days", price: 1799 },
-    {
-      id: 5,
-      name: "Sahara Desert Expedition",
-      duration: "12 days",
-      price: 2499,
-    },
-  ]);
+  const msgToast = (variant: ToastVariant, title: string) => {
+    console.log("in toast");
+    toast({
+      variant,
+      title,
+    });
+  };
 
-  const deleteTour = (id: number) => {
+  const handleClick = async (id: number) => {
+    await deleteTour(id);
     setTours(tours.filter((tour) => tour.id !== id));
+    msgToast("default", "Tour is deleted successfully");
+    router.push("/admin/dashboard")
   };
 
   return (
@@ -75,7 +80,9 @@ export default function Dashboard() {
                 <TableBody>
                   {tours.map((tour) => (
                     <TableRow key={tour.id}>
-                      <TableCell className="font-medium">{tour.name}</TableCell>
+                      <TableCell className="font-medium">
+                        {tour.title}
+                      </TableCell>
                       <TableCell>{tour.duration}</TableCell>
                       <TableCell>${tour.price}</TableCell>
                       <TableCell className="text-right">
@@ -87,7 +94,7 @@ export default function Dashboard() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => deleteTour(tour.id)}
+                          onClick={() => handleClick(tour.id)}
                         >
                           <Trash2 className="h-4 w-4 text-red-500" />
                         </Button>

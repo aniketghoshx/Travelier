@@ -14,7 +14,7 @@ export default async function getTour(id: string) {
     }
     return null;
   } catch (e) {
-    return null;
     console.log(e);
+    return null;
   }
 }
