@@ -21,12 +21,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ToastVariant } from "@/lib/types";
 
 export default function CreateTour() {
-  const session = useSession();
   const router = useRouter();
-  if (!session.data || session.data.user.role !== "ADMIN") {
-    router.push("/");
-  }
-
   const { toast } = useToast();
 
   const msgToast = (variant: ToastVariant, title: string) => {

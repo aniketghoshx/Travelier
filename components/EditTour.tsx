@@ -14,7 +14,6 @@ import {
 import { Label } from "@/components/ui/label";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { TourType } from "@/types/types";
 import updateTour from "@/lib/actions/updateTour";
@@ -22,11 +21,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ToastVariant } from "@/lib/types";
 
 export default function EditTour({ tour }: { tour: TourType }) {
-  const session = useSession();
   const router = useRouter();
-  if (!session.data || session.data.user.role !== "ADMIN") {
-    router.push("/");
-  }
   const { toast } = useToast();
 
   const msgToast = (variant: ToastVariant, title: string) => {
@@ -36,6 +31,7 @@ export default function EditTour({ tour }: { tour: TourType }) {
       title,
     });
   };
+
   const [editedTour, setEditedTour] = useState({
     id: `${tour.id}`,
     title: tour.title,
