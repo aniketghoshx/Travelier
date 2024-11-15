@@ -124,7 +124,7 @@ export const SignUpForm = () => {
                       <FormItem>
                         <FormLabel>Phone</FormLabel>
                         <FormControl>
-                          <Input placeholder="0123456789" {...field} />
+                          <Input type="number" placeholder="0123456789" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
