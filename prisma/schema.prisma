@@ -50,8 +50,8 @@ model Booking{
   tourId          Int
   amount          Int
   noOfTraveler    Int
-  status          BookingStatus
-  bookingDate     DateTime
+  status          BookingStatus @default(Upcoming)
+  bookingDate     String
   createdAt       DateTime    @default(now())
   payment         Payment?
   traveler        User        @relation(fields: [userId], references: [id])
@@ -85,4 +85,5 @@ enum Role{
 enum BookingStatus{
   Upcoming
   Completed
+  Cancelled
 }
