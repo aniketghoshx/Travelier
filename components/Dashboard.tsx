@@ -83,7 +83,7 @@ export default function Dashboard({ allTours }: { allTours: TourType[] }) {
                       <TableCell className="font-medium">
                         {tour.title}
                       </TableCell>
-                      <TableCell>{tour.duration}</TableCell>
+                      <TableCell>{tour.duration} days</TableCell>
                       <TableCell>${tour.price}</TableCell>
                       <TableCell className="text-right">
                         <Link href={`/admin/edit-tour/${tour.id}`}>

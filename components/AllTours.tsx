@@ -40,7 +40,7 @@ export const AllTours = ({tours}: {tours: TourType[]}) => {
                       ${tour.price}
                     </span>
                     <span className="text-sm text-gray-500">
-                      {tour.duration}
+                      {tour.duration} days
                     </span>
                   </div>
                 </CardContent>

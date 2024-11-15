@@ -64,7 +64,7 @@ export const BookingHistory = ({
                     </div>
                     <div className="flex items-center">
                       <Clock className="w-5 h-5 mr-2 text-teal-600" />
-                      <span>Duration: {booking.tour.duration}</span>
+                      <span>Duration: {booking.tour.duration} days</span>
                     </div>
                     <div className="flex items-center">
                       <Users className="w-5 h-5 mr-2 text-teal-600" />
