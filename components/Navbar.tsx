@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const Navbar = () => {
   return (
-    <>
+    <div className="hidden lg:block">
       <nav>
         <ul className="flex space-x-6">
           <li>
@@ -49,6 +49,6 @@ export const Navbar = () => {
           </li>
         </ul>
       </nav>
-    </>
+    </div>
   );
 };
