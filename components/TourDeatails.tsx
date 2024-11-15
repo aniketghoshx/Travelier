@@ -16,14 +16,12 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { useEffect, useState } from "react";
 import { Slider } from "./ui/slider";
-import { useSession } from "next-auth/react";
 import bookTour from "@/lib/actions/bookTour";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { ToastVariant } from "@/lib/types";
 
-export const TourDetails = ({ tour }: { tour: TourType }) => {
-  const session = useSession();
+export const TourDetails = ({ tour, id }: { tour: TourType; id: string }) => {
   const router = useRouter();
   const [travelers, setTravelers] = useState(1);
   const [bookingDate, setBookingDate] = useState("");
@@ -63,7 +61,7 @@ export const TourDetails = ({ tour }: { tour: TourType }) => {
       return;
     }
     const bookingDetails: BookingDetailsType = {
-      userId: parseInt(session.data?.user.id!),
+      userId: parseInt(id),
       tourId: tour.id,
       amount: totalPrice,
       noOfTraveler: travelers,

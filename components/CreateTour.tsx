@@ -14,7 +14,6 @@ import {
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import createTour from "@/lib/actions/createTour";
 import { useToast } from "@/hooks/use-toast";

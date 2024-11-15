@@ -18,5 +18,5 @@ export default async function TourDetailsPage({
   if (!tour) {
     redirect("/tours");
   }
-  return <TourDetails tour={tour} />;
+  return <TourDetails tour={tour} id={session.user.id} />;
 }
