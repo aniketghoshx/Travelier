@@ -68,7 +68,7 @@ export const BookingHistory = ({
                     </div>
                     <div className="flex items-center">
                       <Users className="w-5 h-5 mr-2 text-teal-600" />
-                      <span>Price: ${booking.amount}</span>
+                      <span>Price: ₹{booking.amount}</span>
                     </div>
                     <div className="flex items-center">
                       <span

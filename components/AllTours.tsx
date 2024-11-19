@@ -23,7 +23,7 @@ export const AllTours = ({tours}: {tours: TourType[]}) => {
             {tours.map((tour) => (
               <Card key={tour.id} className="overflow-hidden">
                 <Image
-                  src={"/maldives.jpeg"}
+                  src={`/${tour.id}.jpg`}
                   alt={tour.title}
                   width={500}
                   height={500}
@@ -37,7 +37,7 @@ export const AllTours = ({tours}: {tours: TourType[]}) => {
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <span className="text-2xl font-bold text-teal-600">
-                      ${tour.price}
+                      ₹{tour.price}
                     </span>
                     <span className="text-sm text-gray-500">
                       {tour.duration} days

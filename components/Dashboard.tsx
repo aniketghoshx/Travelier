@@ -84,7 +84,7 @@ export default function Dashboard({ allTours }: { allTours: TourType[] }) {
                         {tour.title}
                       </TableCell>
                       <TableCell>{tour.duration} days</TableCell>
-                      <TableCell>${tour.price}</TableCell>
+                      <TableCell>₹{tour.price}</TableCell>
                       <TableCell className="text-right">
                         <Link href={`/admin/edit-tour/${tour.id}`}>
                           <Button variant="ghost" size="sm" className="mr-2">

@@ -14,20 +14,20 @@ import Image from "next/image";
 const destinations = [
   {
     name: "Serene Bali Retreat",
-    image: "/maldives.jpeg",
+    image: "/1.jpg",
     description:
       "Experience tranquility in the heart of Bali's lush landscapes.",
     price: 1299,
   },
   {
     name: "Alpine Adventure",
-    image: "/maldives.jpeg",
+    image: "/2.jpg",
     description: "Discover the majestic beauty of the Swiss Alps.",
     price: 1899,
   },
   {
     name: "Maldives Paradise",
-    image: "/maldives.jpeg",
+    image: "/3.jpg",
     description:
       "Indulge in luxury amidst crystal-clear waters and white sand beaches.",
     price: 2199,
@@ -60,7 +60,7 @@ export const Featured = () => {
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <span className="text-2xl font-bold text-teal-600">
-                      ${destination.price}
+                      ₹{destination.price}
                     </span>
                     <span className="text-sm text-gray-500">per person</span>
                   </div>

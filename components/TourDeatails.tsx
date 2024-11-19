@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Calendar, Users, Clock, DollarSign } from "lucide-react";
+import { Calendar, Users, Clock, IndianRupee } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -92,7 +92,7 @@ export const TourDetails = ({ tour, id }: { tour: TourType; id: string }) => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <Image
-                src={"/maldives.jpeg"}
+                src={`/${tour.id}.jpg`}
                 alt={tour.title}
                 width={750}
                 height={200}
@@ -178,8 +178,8 @@ export const TourDetails = ({ tour, id }: { tour: TourType; id: string }) => {
                     <span>{tour.duration} days</span>
                   </div>
                   <div className="flex items-center">
-                    <DollarSign className="w-5 h-5 mr-2 text-teal-600" />
-                    <span className="text-2xl font-bold">${tour.price}</span>
+                    <IndianRupee className="w-5 h-5 mr-2 text-teal-600" />
+                    <span className="text-2xl font-bold">₹{tour.price}</span>
                     <span className="text-sm text-gray-500 ml-2">
                       per person
                     </span>
@@ -222,7 +222,7 @@ export const TourDetails = ({ tour, id }: { tour: TourType; id: string }) => {
                   <div className="flex items-center justify-between pt-4 border-t">
                     <span className="text-lg font-semibold">Total Price:</span>
                     <span className="text-2xl font-bold text-teal-600">
-                      ${totalPrice}
+                      ₹{totalPrice}
                     </span>
                   </div>
                 </CardContent>
